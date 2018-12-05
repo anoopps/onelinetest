@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/jquery-1.11.0.min.js"></script>
+    </head>
+    <body>
+        <form id="questFrm">
+            <h1>Questionary <span class="counter">1</span></h1>
+            <table cellpadding="5" cellspacing="5" width=50%>
+                <tr>
+                    <td>
+                        Question 
+                    </td>
+                    <td>
+                        <input type="text" name="question" id="question" size="50%">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Answer
+                    </td>
+                    <td>
+                        <input type="text" name="answer" id="answer" size="50%">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Option1
+                    </td>
+                    <td>
+                        <input type="text" name="option1" id="option1" size="50%">
+                    </td>
+                </tr>
+                <tr>
+                                       
+                    <td>
+                        Option2
+                    </td>
+                    <td>
+                        <input type="text" name="option2" id="option2" size="50%">
+                    </td>
+                </tr>                        
+                <tr>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <input type="button" id="submit" value="Submit">
+                    </td>
+                </tr>
+            </table>
+            <div class="message"></div>
+            <input type="hidden" id="counter" value="1">
+        </form>
+        <script>
+            jQuery(document).ready(function(){
+                    jQuery('#submit').click(function(){
+                        var counter = jQuery('#counter').val();
+                        if (counter<=10) {
+                            
+                            var xmlhttp = jQuery.ajax({
+                            type:'POST',
+                            url:'question.php',
+                            data:jQuery('#questFrm').serialize(),
+                            dataType:'text'
+                            });
+                            
+                            xmlhttp.done(function(message){                            
+                                var result = jQuery.parseJSON(message);
+                                if(result.status){
+                                        jQuery('.message').text(result.message).fadeOut('slow');
+                                        counter++;
+                                        jQuery('#counter').val(counter);
+                                        jQuery('.counter').text(counter);
+                                       document.getElementById('questFrm').reset();
+                                }                                                            
+                            });
+                        }else{
+                             jQuery('.message').text('Maximum data entered').fadeOut('slow');
+                        }
+                    });
+                    
+                });
+        </script>
+    </body>
+</html>

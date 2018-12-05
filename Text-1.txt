@@ -1,0 +1,6 @@
+Online Test
+
+1. enter 10 questions using ajax
+2. with four options
+3. Take part in question interview
+4. Display total mark after done
